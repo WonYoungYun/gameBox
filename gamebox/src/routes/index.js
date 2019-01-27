@@ -4,6 +4,7 @@ import Home from "../components/Home.vue";
 import WordChain from "../components/WordChain.vue";
 import Multiplication from "../components/Multiplication.vue";
 import NumberBaseball from "../components/NumberBaseball.vue";
+import TickTackTo from "../components/TickTackTo.vue";
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -24,6 +25,10 @@ export const router = new VueRouter({
     {
       path: "/numberbaseball",
       component: NumberBaseball
+    },
+    {
+      path: "/ticktackto",
+      component: TickTackTo
     },
     {
       path: "*",

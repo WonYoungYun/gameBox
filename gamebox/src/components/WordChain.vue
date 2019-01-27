@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>끝말잇기</h1>
     <div>{{firstWord}}</div>
     <input type="text" v-model="answerWord" @keyup.enter="onSubmitWord" ref="answerWord">
     <button @click.prevent="onReset">Reset</button>

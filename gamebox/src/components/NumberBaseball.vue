@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>
+      <h1>숫자 야구</h1>
       <input
         type="text"
         v-model="answerNumber"

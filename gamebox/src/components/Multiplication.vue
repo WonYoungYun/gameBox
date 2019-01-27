@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>구구단 게임</h1>
     <div>User Point : {{points}}</div>
     <div>{{firstNum}} X {{secondNum}}</div>
     <input type="text" v-model="answerNum" ref="answerNum" @keyup.enter="submitAnswer">
