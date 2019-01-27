@@ -40,15 +40,16 @@ export default {
   },
   created() {
     this.setFirstMul();
-    this.$nextTick(() => {
-      this.$refs.answerNum.focus();
-    });
+    document.title = "Multiplication";
+  },
+  mounted() {
+    this.$refs.answerNum.focus();
   },
 
   methods: {
     getNum(e) {
       if (this.answerNum.length === 1 && this.answerNum === "0")
-        this.answerNum = "";
+        this.resetAnswer();
       this.answerNum += e.target.innerText;
     },
     setFirstMul() {
@@ -67,13 +68,13 @@ export default {
     correctMul() {
       alert("정답!");
       this.increasePoints();
-      this.answerNum = "";
+      this.resetAnswer();
       this.setFirstMul();
     },
     failMul() {
       alert("틀렸습니다.");
       this.decreasePoints();
-      this.answerNum = "";
+      this.resetAnswer();
       this.setFirstMul();
     },
     resetAnswer() {

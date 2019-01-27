@@ -3,7 +3,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  beforeCreate() {
+    document.title = "gamebox";
+  }
+};
 </script>
 
 <style>

@@ -23,6 +23,7 @@ export default {
   created() {
     this.randomFirstWord();
     // const sample = prompt(this.firstWord);
+    document.title = "WordChain";
     this.$nextTick(() => {
       this.$refs.answerWord.focus();
     });

@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../components/Home.vue";
 import WordChain from "../components/WordChain.vue";
 import Multiplication from "../components/Multiplication.vue";
+import NumberBaseball from "../components/NumberBaseball.vue";
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -19,6 +20,10 @@ export const router = new VueRouter({
     {
       path: "/multiplication",
       component: Multiplication
+    },
+    {
+      path: "/numberbaseball",
+      component: NumberBaseball
     },
     {
       path: "*",
