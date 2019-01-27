@@ -27,6 +27,15 @@ export default {
       this.$refs.answerWord.focus();
     });
   },
+  computed: {
+    correctWord() {
+      if (this.firstWord[this.firstWord.length - 1] === this.answerWord[0])
+        return this.changeFirstWord();
+      else {
+        return this.wrongAnswer("틀림");
+      }
+    }
+  },
   methods: {
     randomFirstWord() {
       const num = Math.floor(Math.random() * 3);
@@ -40,11 +49,7 @@ export default {
         return this.wrongAnswer("이미 있습니다");
       if (this.answerWord.length === 1)
         return this.wrongAnswer("한글자는 너무하지 않음?");
-      if (this.firstWord[this.firstWord.length - 1] === this.answerWord[0])
-        this.changeFirstWord();
-      else {
-        return this.wrongAnswer("틀림");
-      }
+      this.correctWord;
     },
     wrongAnswer(msg) {
       this.answerFail = msg;
@@ -60,6 +65,7 @@ export default {
     },
     onReset() {
       this.wordLog = [];
+      if (this.isfailWord) this.isfailWord = false;
       this.randomFirstWord();
       this.answerWord = "";
     }

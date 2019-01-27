@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../components/Home.vue";
 import WordChain from "../components/WordChain.vue";
+import Multiplication from "../components/Multiplication.vue";
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -14,6 +15,10 @@ export const router = new VueRouter({
     {
       path: "/wordchain",
       component: WordChain
+    },
+    {
+      path: "/multiplication",
+      component: Multiplication
     },
     {
       path: "*",
