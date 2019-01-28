@@ -1,0 +1,93 @@
+<template>
+  <div>
+    <h1>Lotto</h1>
+    <button @click="selectNumber">숫자 뽑기</button>
+    <div v-if="isClickButton" class="board">
+      <div v-for="item in numbers" :key="item" class="cover">
+        <span class="ball">{{item}}</span>
+      </div>
+      <div class="cover">
+        bonus:
+        <span class="ball">{{bonus}}</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      lotto: [],
+      bonus: 0,
+      numbers: [],
+      isClickButton: false
+    };
+  },
+  created() {
+    this.inputNumber();
+  },
+  updated() {
+    this.paintColor();
+  },
+  methods: {
+    inputNumber() {
+      const list = Array(45).fill();
+      this.lotto = list.map((el, idx) => {
+        return idx + 1;
+      });
+    },
+    selectNumber() {
+      const shuffle = [];
+      while (this.lotto.length > 0) {
+        let num = this.lotto.splice(
+          Math.floor(Math.random() * this.lotto.length),
+          1
+        )[0];
+        shuffle.push(num);
+      }
+      this.inputNumber();
+      this.isClickButton = true;
+      this.bonus = shuffle[shuffle.length - 1];
+      this.numbers = shuffle.splice(0, 6).sort((p, c) => p - c);
+    },
+    paintColor() {
+      const ball = document.querySelectorAll(".ball");
+      Array.from(ball).forEach(el => {
+        const ballNum = parseInt(el.innerText);
+        if (ballNum <= 9) {
+          el.style.backgroundColor = "red";
+        } else if (ballNum > 9 && ballNum <= 18) {
+          el.style.backgroundColor = "orange";
+        } else if (ballNum > 18 && ballNum <= 27) {
+          el.style.backgroundColor = "yellow";
+        } else if (ballNum > 27 && ballNum <= 36) {
+          el.style.backgroundColor = "blue";
+        } else {
+          el.style.backgroundColor = "green";
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
+.board {
+  margin: 10px;
+}
+.board {
+  display: flex;
+}
+.ball {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  border-radius: 50%;
+  line-height: 1.6;
+}
+</style>

@@ -74,18 +74,25 @@ export default {
       if (list.includes(1) && list.includes(2) && list.includes(3)) {
         return alert(`${msg} win!`);
       } else if (list.includes(1) && list.includes(4) && list.includes(7)) {
+        this.clearBoard();
         return alert(`${msg} win!`);
       } else if (list.includes(1) && list.includes(5) && list.includes(9)) {
+        this.clearBoard();
         return alert(`${msg} win!`);
       } else if (list.includes(2) && list.includes(5) && list.includes(8)) {
+        this.clearBoard();
         return alert(`${msg} win!`);
       } else if (list.includes(3) && list.includes(6) && list.includes(9)) {
+        this.clearBoard();
         return alert(`${msg} win!`);
       } else if (list.includes(3) && list.includes(5) && list.includes(7)) {
+        this.clearBoard();
         return alert(`${msg} win!`);
       } else if (list.includes(4) && list.includes(5) && list.includes(6)) {
+        this.clearBoard();
         return alert(`${msg} win!`);
       } else if (list.includes(7) && list.includes(8) && list.includes(9)) {
+        this.clearBoard();
         return alert(`${msg} win!`);
       }
       if (this.count === 9) {
