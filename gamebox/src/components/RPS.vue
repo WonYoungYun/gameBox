@@ -90,6 +90,6 @@ export default {
 .rscImg {
   width: 250px;
   height: 340px;
-  background: url("../assets/RSC.png") 0 0;
+  background: url("../assets/RPS.png") 0 0;
 }
 </style>

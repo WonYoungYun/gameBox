@@ -6,7 +6,7 @@ import Multiplication from "../components/Multiplication.vue";
 import NumberBaseball from "../components/NumberBaseball.vue";
 import TickTackTo from "../components/TickTackTo.vue";
 import Lotto from "../components/Lotto.vue";
-import RSC from "../components/RSC.vue";
+import RPS from "../components/RPS.vue";
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -38,7 +38,7 @@ export const router = new VueRouter({
     },
     {
       path: "/rsc",
-      component: RSC
+      component: RPS
     },
     {
       path: "*",
