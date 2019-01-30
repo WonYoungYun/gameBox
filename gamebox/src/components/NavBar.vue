@@ -6,7 +6,8 @@
     <router-link to="/numberbaseball">NumberBaseball</router-link>|
     <router-link to="/ticktackto">TickTackTo</router-link>|
     <router-link to="/lotto">Lotto</router-link>|
-    <router-link to="/rps">Rock Paper Scissors</router-link>
+    <router-link to="/rps">Rock Paper Scissors</router-link>|
+    <router-link to="/minesweeper">MineSweeper</router-link>
   </div>
 </template>
 

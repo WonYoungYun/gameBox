@@ -7,6 +7,7 @@ import NumberBaseball from "../components/NumberBaseball.vue";
 import TickTackTo from "../components/TickTackTo.vue";
 import Lotto from "../components/Lotto.vue";
 import RPS from "../components/RPS.vue";
+import MineSweeper from "../components/MineSweeper.vue";
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -37,8 +38,12 @@ export const router = new VueRouter({
       component: Lotto
     },
     {
-      path: "/rsc",
+      path: "/rps",
       component: RPS
+    },
+    {
+      path: "/minesweeper",
+      component: MineSweeper
     },
     {
       path: "*",

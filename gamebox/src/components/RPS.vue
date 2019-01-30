@@ -70,7 +70,7 @@ export default {
       this.isClickRestart = true;
       const myScore = this.score[a];
       const cpScore = this.score[b];
-      const logMessage = `컴퓨터는 ${a} 나는 ${b}`;
+      const logMessage = `컴퓨터는 ${b} 나는 ${a}`;
       if (myScore - cpScore === 0) {
         this.msg = `비겼습니다! ${logMessage}`;
       } else if ([-1, 2].includes(myScore - cpScore)) {

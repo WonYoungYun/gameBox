@@ -75,8 +75,6 @@ export default {
 <style scoped>
 .board {
   margin: 10px;
-}
-.board {
   display: flex;
 }
 .ball {
