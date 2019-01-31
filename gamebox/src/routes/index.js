@@ -9,6 +9,7 @@ import Lotto from "../components/Lotto.vue";
 import RPS from "../components/RPS.vue";
 import MineSweeper from "../components/MineSweeper.vue";
 import Reaction from "../components/Reaction.vue";
+import CardPair from "../components/CardPair.vue";
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -49,6 +50,10 @@ export const router = new VueRouter({
     {
       path: "/reaction",
       component: Reaction
+    },
+    {
+      path: "/cardpair",
+      component: CardPair
     },
     {
       path: "*",

@@ -8,7 +8,8 @@
     <router-link to="/lotto">로또&nbsp;</router-link>|
     <router-link to="/rps">가위바위보&nbsp;</router-link>|
     <router-link to="/minesweeper">지뢰찾기&nbsp;</router-link>|
-    <router-link to="/reaction">반응속도 테스트&nbsp;</router-link>
+    <router-link to="/reaction">반응속도 테스트&nbsp;</router-link>|
+    <router-link to="/cardpair">카드 짝맞추기&nbsp;</router-link>
   </div>
 </template>
 

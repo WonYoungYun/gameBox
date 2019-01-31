@@ -6,8 +6,9 @@
       :class="{waiting:screenStatus.isWating, ready:screenStatus.isReady, now:screenStatus.isNow}"
     >
       <span>{{screenStatus.msg}}</span>
+      <p v-if="gameCheck">재시작 하려면 화면을 누르세요</p>
     </div>
-    <p v-if="avgTime">당신의 평균: {{avgTime}}</p>
+    <p v-if="avgTime">당신의 평균 반응속도: {{avgTime}} 초</p>
   </div>
 </template>
 
@@ -24,27 +25,31 @@ export default {
       startTime: null,
       checkTime: null,
       score: 0,
-      log: []
+      log: [],
+      isStart: false
     };
   },
   computed: {
+    gameCheck() {
+      return this.isStart && this.screenStatus.isWaiting;
+    },
     avgTime() {
       if (!this.log.length) return;
       const avg =
         this.log.reduce((sum, el) => {
           return sum + el;
         }, 0) / this.log.length || 1;
-      return avg;
+      return avg.toFixed(3);
     }
   },
   methods: {
     startGame() {
       const screen = this.screenStatus;
-
+      this.isStart = true;
       if (screen.isWaiting) {
         screen.isWaiting = false;
         screen.isReady = true;
-        screen.msg = "녹색이 되면 클릭!";
+        screen.msg = "녹색이 되면 클릭하세요!";
         this.checkTime = setTimeout(() => {
           this.startTime = new Date();
           screen.isReady = false;
@@ -57,7 +62,7 @@ export default {
           screen.isNow = false;
           screen.isReady = false;
           screen.isWaiting = true;
-          screen.msg = "너무빨리 누르셨습니다.";
+          screen.msg = `너무 빨리 누르셨습니다.`;
           return;
         }
         screen.isReady = false;
@@ -70,11 +75,12 @@ export default {
         this.score = (endTime - this.startTime) / 1000;
         this.startTime = null;
         this.log.push(this.score);
-        console.log(this.score);
-        console.log(this.log);
-        screen.msg = "재시작?";
+        screen.msg = `${this.score}초 `;
       }
     }
+  },
+  beforeDestroy() {
+    clearTimeout(this.checkTime);
   }
 };
 </script>
