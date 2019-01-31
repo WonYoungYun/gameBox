@@ -8,6 +8,7 @@ import TickTackTo from "../components/TickTackTo.vue";
 import Lotto from "../components/Lotto.vue";
 import RPS from "../components/RPS.vue";
 import MineSweeper from "../components/MineSweeper.vue";
+import Reaction from "../components/Reaction.vue";
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -44,6 +45,10 @@ export const router = new VueRouter({
     {
       path: "/minesweeper",
       component: MineSweeper
+    },
+    {
+      path: "/reaction",
+      component: Reaction
     },
     {
       path: "*",

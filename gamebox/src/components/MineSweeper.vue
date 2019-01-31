@@ -1,6 +1,5 @@
 <template>
   <div>
-    <img src="http://minesweeperonline.com/sprite100.gif" alt>
     <h1>MineSweeper</h1>
     <div>
       <div>
@@ -25,11 +24,6 @@
       <button @click="reset" :disabled="invalidButton" v-else>reset</button>
       <div>
         <table id="board">
-          <tr>
-            <td>
-              <span id="timer">0</span>초
-            </td>
-          </tr>
           <tbody>
             <tr v-for="(line,index) in board" :key="index">
               <td
@@ -129,7 +123,8 @@ export default {
             id: "",
             done: false,
             question: false,
-            exclamation: false
+            exclamation: false,
+            mine: ""
           });
         }
       }
@@ -153,8 +148,8 @@ export default {
         let hor = Math.floor(this.minePos[k] / width);
         let ver = (this.minePos[k] % width) - 1;
         ver < 0
-          ? (this.board[hor - 1][width - 1].id = "X")
-          : (this.board[hor][ver].id = "X");
+          ? (this.board[hor - 1][width - 1].mine = "X")
+          : (this.board[hor][ver].mine = "X");
 
         //지뢰 위치에 X를 그려줌 지뢰위치정보는 minePos가 가지고 있다.
       }
@@ -173,7 +168,7 @@ export default {
       if (this.gameOver) return;
       if (target.done) return;
 
-      if (e.target.textContent === "X") {
+      if (target.mine === "X") {
         target.done = true;
         this.gameOver = true;
         this.msg = "실패 ㅠㅠ";
@@ -207,7 +202,7 @@ export default {
       }
 
       target.id = nearCheck.filter(
-        e => this.board[e.width][e.height].id === "X"
+        e => this.board[e.width][e.height].mine === "X"
       ).length;
       if (this.open === this.size) {
         this.gameOver = true;
@@ -236,7 +231,7 @@ export default {
       if (this.gameOver) return;
       if (target.done) return;
 
-      if (target.id === "" || target.id === "X") {
+      if (target.id === "") {
         flag = "!";
         target.exclamation = true;
       } else if (target.id === "!") {
@@ -244,9 +239,7 @@ export default {
         target.exclamation = false;
         target.question = true;
       } else if (target.id === "?") {
-        const num = fVer * parentTr.children.length + fHor + 1;
-        if (this.minePos.includes(num)) flag = "X";
-        else flag = "";
+        flag = "";
         target.exclamation = false;
         target.question = false;
       }
