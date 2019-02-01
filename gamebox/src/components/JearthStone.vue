@@ -20,7 +20,11 @@
           </div>
         </div>
         <div class="hero-area">
-          <div id="rival-hero" class="hero" @click="directAttack(rivalStatus.id)">
+          <div
+            id="rival-hero"
+            :class="{hero:true, turn:!myTurn}"
+            @click="directAttack(rivalStatus.id)"
+          >
             {{rivalStatus.id}}
             <div
               id="rival-hero-attack"
@@ -37,7 +41,7 @@
         <div id="rival-field" class="field">
           <div
             class="minion-card"
-            :class="{selected:card.isSelected}"
+            :class="{selected:card.isSelected, attackPossible:attackPossible(card.isAttacked, card.isSleep)}"
             v-for="card in field.rivalField"
             :key="card.id"
             @click="selectMinionCard(card,myTurn)"
@@ -49,16 +53,15 @@
           </div>
         </div>
       </div>
-      <button id="turn-button" @click="changeTurn">turn Button</button>
+      <button id="turn-button" @click="changeTurn">턴 종료</button>
       <div>
-        <span v-if="myTurn">"me"의 턴입니다</span>
-        <span v-else>"rival" 턴입니다.</span>
+        <span class="msg">{{msg}}</span>
       </div>
       <div id="my" class="area">
         <div id="my-field" class="field">
           <div
             class="minion-card"
-            :class="{selected:card.isSelected}"
+            :class="{selected:card.isSelected, attackPossible:attackPossible(card.isAttacked, card.isSleep)}"
             v-for="card in field.myField"
             :key="card.id"
             @click="selectMinionCard(card, myTurn)"
@@ -70,7 +73,7 @@
           </div>
         </div>
         <div class="hero-area">
-          <div id="my-hero" class="hero" @click="directAttack(myStatus.id)">
+          <div id="my-hero" :class="{hero:true, turn:myTurn}" @click="directAttack(myStatus.id)">
             {{myStatus.id}}
             <div id="my-hero-attack" class="status attack" v-if="myStatus.att>0">{{myStatus.att}}</div>
             <div id="my-hero-health" class="status health">{{myStatus.hp}}</div>
@@ -104,7 +107,7 @@ export default {
       hero: {
         myHero: {
           id: "me",
-          hp: 30,
+          hp: 20,
           att: 0,
           fullCost: 10,
           useCost: 10,
@@ -112,7 +115,7 @@ export default {
         },
         rivalHero: {
           id: "rival",
-          hp: 30,
+          hp: 20,
           att: 0,
           fullCost: 10,
           useCost: 10,
@@ -130,7 +133,8 @@ export default {
       myTurn: true,
       selecting: false,
       battle: [],
-      isGaming: false
+      isGaming: false,
+      msg: ""
     };
   },
   computed: {
@@ -157,10 +161,14 @@ export default {
     this.setGame();
   },
   methods: {
+    attackPossible(attacked, sleep) {
+      return !attacked && !sleep;
+    },
     setGame() {
-      this.hand.myHand = JearthStone.myHand("me");
-      this.hand.rivalHand = JearthStone.rivalHand("rival");
+      this.hand.myHand = JearthStone.myHand(this.hero.myHero.id);
+      this.hand.rivalHand = JearthStone.rivalHand(this.hero.rivalHero.id);
       this.isGaming = true;
+      this.msg = '"me"의 턴입니다.';
     },
     summonMyMinion(card) {
       if (!this.isGaming) return;
@@ -175,8 +183,8 @@ export default {
     summonMinion(card, turn) {
       const hero = turn ? this.hero.myHero : this.hero.rivalHero;
       const field = turn ? this.field.myField : this.field.rivalField;
-      if (field.length === 7) return alert("필드가 가득 찼습니다.");
-      if (hero.useCost < card.cost) return;
+      if (field.length === 7) return (this.msg = "필드가 가득 찼습니다.");
+      if (hero.useCost < card.cost) return (this.msg = "마나가 부족합니다.");
       hero.useCost -= card.cost;
       field.push(card);
       if (turn) {
@@ -195,12 +203,15 @@ export default {
         return;
       }
       this.myTurn = !this.myTurn;
+      this.myTurn
+        ? (this.msg = '"me"의 턴입니다.')
+        : (this.msg = '"rival"의 턴입니다.');
       const hero = this.myTurn ? this.hero.myHero : this.hero.rivalHero;
       const hand = this.myTurn ? this.hand.myHand : this.hand.rivalHand;
       const field = this.myTurn ? this.field.rivalField : this.field.myField;
-      const player = this.myTurn ? "me" : "rival";
+      const player = this.myTurn ? this.hero.myHero.id : this.hero.rivalHero.id;
       if (hand.length === 10) {
-        alert(`${hero.id}의 핸드가 가득찼습니다!`);
+        this.msg = `${hero.id}의 핸드가 가득찼습니다!`;
       } else {
         hero.draw++;
         hand.push(JearthStone.drawCard(hero.draw, player));
@@ -219,17 +230,17 @@ export default {
       if (this.battle.length === 0) {
         //내 턴에 내필드를 클릭하는지 확인
         if (turn) {
-          if (card.player !== "me")
-            return alert("자신의 필드에 있는 하수인을 클릭하세요!");
+          if (card.player !== this.hero.myHero.id)
+            return (this.msg = "자신의 필드에 있는 하수인을 클릭하세요!");
         } else {
-          if (card.player !== "rival")
-            return alert("자신의 필드에 있는 하수인을 클릭하세요!");
+          if (card.player !== this.hero.rivalHero.id)
+            return (this.msg = "자신의 필드에 있는 하수인을 클릭하세요!");
         }
         //이번 턴에 낸 카드를 클릭했을 때
         if (card.isSleep)
-          return alert("이번 턴에 낸 카드는 공격할 수 없습니다.");
+          return (this.msg = "이번 턴에 낸 카드는 공격할 수 없습니다.");
         //이미 공격한 카드를 클릭했을 때
-        if (card.isAttacked) return alert("이미 공격했습니다!");
+        if (card.isAttacked) return (this.msg = "이미 공격했습니다!");
       }
 
       //선택한 카드를 다시 선택할 경우 원래 상태로 복귀
@@ -248,7 +259,7 @@ export default {
         //내 필드의 내카드 중복선택 방지
         if (first.player === second.player) {
           card.isSelected = false;
-          return alert("공격할 적의 하수인을 누르세요");
+          return (this.msg = "공격할 적의 하수인을 누르세요");
         }
         this.getBattle(first, second);
         this.battle.forEach(el => (el.isSelected = false));
@@ -271,23 +282,23 @@ export default {
       //내턴일경우
       if (this.myTurn) {
         if (this.hero.myHero.id === id)
-          return alert("내가 나를 공격하는 바보가 존재한다?");
+          return (this.msg = "자신을 공격할 수 없습니다!");
         else {
           this.hero.rivalHero.hp -= this.battle[0].att;
           if (this.hero.rivalHero.hp <= 0) {
             this.isGaming = false;
-            return alert("me의 승리!");
+            return (this.msg = '"me"가 승리했습니다!!');
           }
         }
       } else {
         if (this.hero.rivalHero.id === id) {
-          return alert("스스로를 공격하는 바보가 있다?");
+          return (this.msg = "자신을 공격할 수 없습니다!");
         } else {
           this.hero.myHero.hp -= this.battle[0].att;
           if (this.hero.myHero.hp <= 0) {
             this.isGaming = false;
 
-            return alert("rival의 승리!");
+            return (this.msg = '"rival"이 승리했습니다!!');
           }
         }
       }
@@ -326,9 +337,21 @@ a {
   width: 100px;
   height: 50px;
   background-color: black;
+  border: none;
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: 700;
   color: #fff;
-  line-height: 2.7;
+  line-height: 2.2;
   z-index: 3;
+  cursor: pointer;
+}
+#turn-button:hover {
+  background-color: #ccc;
+  color: #333;
+}
+#turn-button:focus {
+  outline: none;
 }
 .area {
   position: relative;
@@ -356,11 +379,11 @@ a {
 
 #rival-hand {
   bottom: 100%;
-  transform: translate(-50%, 90%);
+  transform: translate(-50%, 100%);
 }
 #my-hand {
   top: 100%;
-  transform: translate(-50%, -90%);
+  transform: translate(-50%, -100%);
 }
 .hero-area {
   display: flex;
@@ -378,6 +401,9 @@ a {
   width: 100px;
   height: 100px;
   cursor: pointer;
+}
+.turn {
+  background-color: yellow;
 }
 #my-hero {
   margin-bottom: 150px;
@@ -430,7 +456,7 @@ a {
   display: inline-block;
   margin: 0 20px;
   width: 100px;
-  height: 150px;
+  height: 130px;
   border: 1px solid black;
   background-color: brown;
   line-height: 6;
@@ -442,6 +468,9 @@ a {
   background-color: burlywood;
   transform: scale(1.2);
 }
+.attackPossible {
+  background-color: greenyellow;
+}
 #my-hand .minion-card,
 #rival-hand .minion-card {
   margin: 10px 0;
@@ -452,5 +481,10 @@ a {
 #my-hand .minion-card:hover,
 #rival-hand .minion-card:hover {
   transform: scale(1.2);
+}
+
+.msg {
+  font-size: 30px;
+  font-weight: 700;
 }
 </style>

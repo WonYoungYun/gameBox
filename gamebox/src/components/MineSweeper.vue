@@ -60,7 +60,7 @@ export default {
         hard: {
           width: 30,
           height: 16,
-          mines: 99
+          mines: 80
         },
         custom: {
           width: 3,
