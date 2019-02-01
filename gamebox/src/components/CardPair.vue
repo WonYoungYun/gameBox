@@ -1,6 +1,17 @@
 <template>
   <div>
-    <button @click="gameStart" :disabled="isSettingBoard">GameStart</button>
+    <nav>
+      <div>
+        <input type="radio" id="easy" value="easy" v-model="level" :checked="level">
+        <label for="easy">easy</label>
+        <input type="radio" id="normal" value="normal" v-model="level">
+        <label for="normal">normal</label>
+        <input type="radio" id="hard" value="hard" v-model="level">
+        <label for="hard">hard</label>
+      </div>
+      <button @click="gameStart" :disabled="isSettingBoard">GameStart</button>
+    </nav>
+
     <div id="wrap">
       <div id="play-board">
         <div
@@ -24,10 +35,24 @@
 export default {
   data() {
     return {
+      levelDic: {
+        easy: {
+          width: 3,
+          height: 4
+        },
+        normal: {
+          width: 4,
+          height: 4
+        },
+        hard: {
+          width: 5,
+          height: 6
+        }
+      },
       cards: [],
       board: {
-        width: 3,
-        height: 2,
+        width: 0,
+        height: 0,
         size: 0
       },
       value: [],
@@ -37,7 +62,8 @@ export default {
       clickedCard: [],
       correct: 0,
       openAllCard: null,
-      myClickCount: 0
+      myClickCount: 0,
+      level: "easy"
     };
   },
 
@@ -56,6 +82,8 @@ export default {
     },
     settingBoard() {
       this.isSettingBoard = true;
+      this.board.width = this.levelDic[this.level].width;
+      this.board.height = this.levelDic[this.level].height;
       this.board.size = this.board.width * this.board.height;
 
       const board = document.getElementById("play-board");
@@ -63,7 +91,7 @@ export default {
         this.board.width >= this.board.height
           ? this.board.width
           : this.board.height;
-      board.style.width = boardWidthNum * 150 + "px";
+      board.style.width = boardWidthNum * 120 + "px";
 
       for (let j = 1; j <= this.board.size / 2; j++) {
         this.value.push(j);
@@ -86,7 +114,7 @@ export default {
         this.openAllCard = setTimeout(() => {
           card.isFlipped = true;
           this.isSettingBoard = false;
-        }, 3000);
+        }, 2200 + 500 * this.board.width);
       });
     },
     flipCard(card) {
@@ -147,8 +175,8 @@ export default {
 .card {
   display: inline-block;
   margin: 20px 20px;
-  width: 100px;
-  height: 150px;
+  width: 80px;
+  height: 100px;
   user-select: none;
 }
 .card-inner {

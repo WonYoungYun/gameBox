@@ -10,6 +10,7 @@ import RPS from "../components/RPS.vue";
 import MineSweeper from "../components/MineSweeper.vue";
 import Reaction from "../components/Reaction.vue";
 import CardPair from "../components/CardPair.vue";
+import JearthStone from "../components/JearthStone.vue";
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -54,6 +55,10 @@ export const router = new VueRouter({
     {
       path: "/cardpair",
       component: CardPair
+    },
+    {
+      path: "/jearthstone",
+      component: JearthStone
     },
     {
       path: "*",
