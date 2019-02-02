@@ -13,11 +13,29 @@
         <label for="custom">custom</label>
       </div>
       <div v-if="!isSelectCustom">
-        <input type="text" id="custom_height" value="custom_height" v-model="level.custom.height">
+        <input
+          type="text"
+          id="custom_height"
+          value="custom_height"
+          v-model="level.custom.height"
+          maxlength="2"
+        >
         <label for="custom_height">height</label>
-        <input type="text" id="custom_width" value="custom_width" v-model="level.custom.width">
+        <input
+          type="text"
+          id="custom_width"
+          value="custom_width"
+          v-model="level.custom.width"
+          maxlength="2"
+        >
         <label for="custom_width">width</label>
-        <input type="text" id="custom_mines" value="custom_mines" v-model="level.custom.mines">
+        <input
+          type="text"
+          id="custom_mines"
+          value="custom_mines"
+          v-model="level.custom.mines"
+          maxlength="2"
+        >
         <label for="custom_mines">mines</label>
       </div>
       <button @click="startGame" :disabled="invalidButton" v-if="!isStart">start</button>

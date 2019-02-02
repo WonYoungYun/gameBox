@@ -12,6 +12,7 @@ import Reaction from "../components/Reaction.vue";
 import CardPair from "../components/CardPair.vue";
 import JearthStone from "../components/JearthStone.vue";
 import Game2048 from "../components/Game2048.vue";
+
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
@@ -65,6 +66,7 @@ export const router = new VueRouter({
       path: "/game2048",
       component: Game2048
     },
+
     {
       path: "*",
       component: Home
