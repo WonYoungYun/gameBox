@@ -42,6 +42,7 @@ export default {
     };
   },
   created() {
+        document.title = "Baseball";
     this.makeNumber();
   },
   mounted() {

@@ -42,6 +42,10 @@ h2 {
   margin: 0;
   padding: 0;
 }
+button{
+  outline:none;
+  border:none;
+}
 .main-content {
   margin: 100px auto;
   padding: 70px 100px;

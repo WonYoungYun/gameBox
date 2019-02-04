@@ -40,6 +40,9 @@ export default {
       message: ''
     };
   },
+  created(){
+    document.title = "TickTackTo"
+  },
   mounted(){
     this.clickArea();
 
@@ -106,6 +109,7 @@ export default {
         return this.message = `${msg} 가 이겼습니다!`;
       }
       if (this.count === 9) {
+                this.isStartGame = false;
         this.message = "비겼습니다!"
       }
     },

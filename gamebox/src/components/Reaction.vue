@@ -42,6 +42,9 @@ export default {
       return avg.toFixed(3);
     }
   },
+  created(){
+        document.title = "Reaction";
+  },
   methods: {
     startGame() {
       const screen = this.screenStatus;

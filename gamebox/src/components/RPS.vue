@@ -1,12 +1,21 @@
 <template>
-  <div>
+  <div class="main-content">
+    <h2 class="game-title">가위 바위 보</h2>
+    <div class="game-board">
+      <div class="img-content">
     <div class="rscImg"></div>
-    <div>{{msg}}</div>
-    <button @click="startGame" v-if="isClickRestart">다시하기</button>
+    </div>
+    <div class="user-content">
+    <div class="message" v-html="msg"></div>
+    <div class="button-area">
+    <button @click="startGame" v-if="isClickRestart" class="reset-button">- 다시하기 -</button>
     <div v-else>
-      <button @click="battle">가위</button>
-      <button @click="battle">바위</button>
-      <button @click="battle">보</button>
+      <button @click="battle" class="rps-button">가위</button>
+      <button @click="battle" class="rps-button">바위</button>
+      <button @click="battle" class="rps-button">보</button>
+    </div>
+    </div>
+    </div>
     </div>
   </div>
 </template>
@@ -30,10 +39,11 @@ export default {
         보: -1
       },
       isClickRestart: false,
-      msg: ""
+      msg: "",
     };
   },
   created() {
+        document.title = "Rock Paper Scissors";
     this.startGame();
   },
   methods: {
@@ -72,11 +82,12 @@ export default {
       const cpScore = this.score[b];
       const logMessage = `컴퓨터는 ${b} 나는 ${a}`;
       if (myScore - cpScore === 0) {
-        this.msg = `비겼습니다! ${logMessage}`;
+        this.msg = "비겼습니다! <br/>"+ logMessage;
       } else if ([-1, 2].includes(myScore - cpScore)) {
-        this.msg = `졌습니다 ㅜㅜ ${logMessage}`;
+        this.msg = "졌습니다! ㅠㅠ <br/>"+ logMessage;
       } else if ([1, -2].includes(myScore - cpScore)) {
-        this.msg = `이겼습니다 ^^ ${logMessage}`;
+        this.msg = "이겼습니다 ^^b <br/>" + logMessage;
+;
       }
     }
   },
@@ -87,9 +98,65 @@ export default {
 </script>
 
 <style scoped>
+.game-board{
+  width: 700px;
+  margin: 30px auto;
+  display: flex;
+}
+.img-content{
+  flex:1;
+}
 .rscImg {
   width: 250px;
   height: 340px;
   background: url("../assets/RPS.png") 0 0;
+}
+.user-content{
+  flex:1 ;
+  text-align: center;
+}
+.message{
+  margin-top: 30px;
+  font-size: 1.5em;
+  font-weight: 500;
+}
+.button-area{
+  margin-top:70px;
+}
+.reset-button{
+  background: none;
+  font-size: 1.3em;
+  font-weight: 700;
+  border-radius: 20px;
+  height: 50px;
+  width: 170px;
+  color:#333;
+  cursor: pointer;
+  transition: all .2s;
+}
+.reset-button:hover{
+  background-color: rgba(0,0,0, .5);
+  color:#eee;
+}
+.rps-button{
+  width: 60px;
+  height: 60px;
+  margin: 0 10px;
+  border-radius: 50%;
+  transition: opacity .3s;
+  cursor: pointer;
+  opacity: .5;
+}
+.rps-button:first-child{
+  background-color: rgb(0,255,0)
+}
+.rps-button:nth-child(2){
+  background-color: rgb(0,0,255)
+}
+.rps-button:nth-child(3){
+  background-color: rgb(255,0,0)
+}
+.rps-button:hover{
+  opacity: 1;
 }
 </style>

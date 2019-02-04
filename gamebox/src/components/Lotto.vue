@@ -11,7 +11,7 @@
           <div v-for="(log,index) in logs" :key="index">
             <span class="ball" v-for="(item,idx) in log.numbers" :key="idx">{{item}}</span>
             <span>
-              bonus:
+              Bonus:
               <span class="ball">{{log.plus}}</span>
             </span>
           </div>
@@ -33,6 +33,7 @@ export default {
     };
   },
   created() {
+        document.title = "Lotto";
     this.inputNumber();
   },
   updated() {
@@ -106,7 +107,7 @@ export default {
   font-weight: 700;
   box-sizing: border-box;
 
-    background: linear-gradient(90deg, #08d0eb, #f441a5, #ffeb3b, #06aa87);
+    background: linear-gradient(90deg, #08d0eb, #f441a5, #ffeb3b, #06aa87, #08d0eb);
       border-radius: 40px  0 0 40px;
   background-size:400%;
 

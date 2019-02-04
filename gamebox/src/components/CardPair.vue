@@ -66,6 +66,9 @@ export default {
       level: "easy"
     };
   },
+  created(){
+        document.title = "Card Game";
+  },
 
   methods: {
     gameStart() {

@@ -43,6 +43,7 @@
       </div>
       <button @click="startGame" :disabled="invalidButton" v-if="!isStart">start</button>
       <button @click="reset" :disabled="invalidButton" v-else>reset</button>
+            <span v-if="gameOver">{{msg}}</span>
       <div>
         <table id="board">
           <tbody>
@@ -58,7 +59,7 @@
           </tbody>
         </table>
       </div>
-      <p v-if="gameOver">{{msg}}</p>
+
     </div>
   </div>
 </template>
@@ -117,7 +118,9 @@ export default {
       return false;
     }
   },
-
+  created(){
+        document.title = "MineSweeper";
+  },
   methods: {
     startGame() {
       this.isStart = true;

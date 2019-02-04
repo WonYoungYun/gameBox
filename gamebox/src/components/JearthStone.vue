@@ -156,6 +156,7 @@ export default {
     }
   },
   created() {
+        document.title = "JearthStone";
     this.setGame();
   },
   methods: {
