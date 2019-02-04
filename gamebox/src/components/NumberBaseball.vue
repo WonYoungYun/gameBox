@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <div>
-      <h1>숫자 야구</h1>
+  <div class="main-content">
+      <h2 class="game-title">숫자 야구</h2>
+      <div class="game-board">
+      <div class="msg-area"><span class="msg">{{msg}}</span>      <button @click="clearGame(all)" class="clear-button">&times;</button></div>
+      <fieldset class="baseball-input">
       <input
         type="text"
         v-model="answerNumber"
@@ -9,14 +11,16 @@
         @keyup.enter="submitNumber"
         maxlength="4"
       >
-      <button @click="submitNumber">제출</button>
-      <div v-if="viewLog">
+      <button @click="submitNumber">&#9918;</button>
+
+      </fieldset>
+      <div v-if="viewLog" class="baseball-log">
         <div
           v-for="(log,index) in logs"
           :key="index"
-        >{{index+1}} 번째 당신의 숫자 : {{log.number}} Strike: {{log.strike}} Ball: {{log.ball}}</div>
+        >{{index+1}}번째 공 : {{log.number}} Strike: {{log.strike}} Ball: {{log.ball}}</div>
       </div>
-    </div>
+      </div>
   </div>
 </template>
 
@@ -29,8 +33,11 @@ export default {
       ball: 0,
       answerNumber: "",
       logs: [],
+      all: "all",
       viewLog: false,
-      count: 0
+      isOverlap: false,
+      count: 0,
+      msg: "컴퓨터가 숫자를 정했습니다."
     };
   },
   created() {
@@ -52,18 +59,29 @@ export default {
     submitNumber() {
       if (this.answerNumber.length < 4) {
         this.answerNumber = "";
-        return alert("4자리 수를 입력하세요");
+        return this.msg = "4자리 수를 입력하세요";
       }
+      const set = new Set(this.answerNumber)
+      if(set.size < 4) this.isOverlap = true;
+
+      if(this.isOverlap) {
+        this.isOverlap = false;
+        this.answerNumber = ""
+        return this.msg = "숫자가 중복됩니다!"
+      }
+
       const aNumber = this.cNumber.join("");
       if (aNumber === this.answerNumber) {
-        alert("정답입니다!");
-        return this.clearGame("all");
+        this.msg = "정답입니다!";
+        return this.clearGame(this.all);
       } else {
+
         return this.checkNum(aNumber);
       }
     },
     checkNum(aNum) {
       this.count++;
+              this.msg = `남은 횟수: ${10 - this.count}번`
       const uNumber = this.answerNumber.split("");
       uNumber.forEach((element, index) => {
         const uNum = parseInt(element);
@@ -79,7 +97,7 @@ export default {
         ball: this.ball
       });
       if (this.count === 10) {
-        alert(`게임 종료! 당신의 패배! 정답은 ${aNum}`);
+        this.msg = `게임 종료! 당신의 패배! 정답은 ${aNum}`;
         return this.clearGame("all");
       }
       this.viewLog = true;
@@ -91,6 +109,7 @@ export default {
         this.logs = [];
         this.viewLog = false;
         this.cNumber = [];
+        this.msg = "컴퓨터가 공을 던졌습니다!"
       }
       this.answerNumber = "";
       this.strike = 0;
@@ -102,5 +121,59 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+button{
+  border:none;
+  outline:none;
+  background:none;
+}
+.game-board{
+  margin-top: 40px;
+  text-align: center;
+}
+.msg-area{
+  margin-bottom:30px;
+}
+.msg{
+  margin-left:20px;
+  font-size:1.6em;
+  font-weight: 700;
+}
+.clear-button{
+  height:100%;
+  font-size:2em;
+  margin-left: 20px;
+  color: rgb(255, 0, 0);
+  cursor: pointer;
+}
+.baseball-input{
+  margin: 0 auto;
+  margin-bottom: 40px;
+  width: 200px;
+  height: 40px;
+  border:2px solid #32cd32;
+}
+.baseball-input::after{
+  content: '';
+  clear: both;
+}
+.baseball-input input{
+  float: left;
+  margin-top:3px;
+  width:140px;
+  font-size:2em;
+  text-align: center;
+  border:none;
+  outline:none;
+}
+.baseball-input button{
+  float: right;
+  font-size: 1.8em;
+  cursor: pointer;
+}
+.baseball-log{
+  font-size:1.5em;
+  color:#333;
+
+}
 </style>

@@ -42,6 +42,15 @@ h2 {
   margin: 0;
   padding: 0;
 }
+.main-content {
+  margin: 100px auto;
+  padding: 70px 100px;
+  width: 1000px;
+  min-height: 600px;
+  background-color: #fff;
+  box-sizing: border-box;
+  user-select: none;
+}
 .game-title{
   font-size:2.2em;
   letter-spacing: .3em;
