@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar></nav-bar>
-    <router-view id="main-content"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -42,12 +42,10 @@ h2 {
   margin: 0;
   padding: 0;
 }
-
-#main-content {
-  margin: 100px auto;
-  padding: 100px 0;
-  width: 1000px;
-  background-color: #fff;
-  text-align: center;
+.game-title{
+  font-size:2.2em;
+  letter-spacing: .3em;
 }
+
+
 </style>

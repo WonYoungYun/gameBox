@@ -1,7 +1,6 @@
 <template>
-  <section>
-    <h1 class="home-title">여러가지 게임들을 즐기세요!</h1>
-
+  <div class="main-content">
+    <h2 class="home-title">여러가지 게임들을 즐기세요!</h2>
     <div class="home-description"></div>
     <div class="content">
       <ul class="game-list">
@@ -84,7 +83,7 @@
         </li>
       </ul>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -96,12 +95,25 @@ export default {
 </script>
 
 <style scoped>
+.main-content {
+  margin: 100px auto;
+  padding: 70px 0 80px 0;
+  width: 1000px;
+  background-color: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+.home-title{
+  font-size: 2em;
+  color:#333;
+}
 .content {
+  margin-top:50px;
   width: 100%;
 }
 .game-list {
   width: 100%;
-  padding: 0 100px;
+  padding: 0 80px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -117,20 +129,21 @@ export default {
 }
 .card-cover {
   position: absolute;
-  top: 100%;
+  top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: top 0.5s;
+  transition: opacity 0.5s;
+  opacity: 0;
 }
 .card:hover .card-cover {
-  top: 0;
+  opacity: 1;
 }
 .card-text {
   font-size: 24px;
   font-weight: 700;
   color: #fff;
-  line-height: 5;
+  line-height: 8;
 }
 .wordchain {
   background: url("../assets/card/wordchain.jpg") 0 0;

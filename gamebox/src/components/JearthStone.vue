@@ -5,7 +5,6 @@
     </h1>
     <div id="wrap">
       <div id="rival" class="area">
-        <div id="rival-deck" class="deck">상대 덱</div>
         <div id="rival-hand" class="hand">
           <div
             class="minion-card"
@@ -93,7 +92,6 @@
             <div class="status health">{{card.hp}}</div>
           </div>
         </div>
-        <div id="my-deck" class="deck">내 덱</div>
       </div>
     </div>
   </div>
@@ -320,12 +318,15 @@ a {
 #wrap {
   position: relative;
   margin: 100px auto;
-  width: 1600px;
+  width: 100%;
+  min-width:940px;
+  max-width: 1200px;
   height: 900px;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
   text-align: center;
+  box-sizing:border-box;
 
   user-select: none;
   z-index: 0;
@@ -333,7 +334,7 @@ a {
 #turn-button {
   position: absolute;
   top: 425px;
-  right: 150px;
+  right: 50px;
   width: 100px;
   height: 50px;
   background-color: black;
@@ -359,16 +360,6 @@ a {
   flex-direction: column;
   border: 1px solid black;
   flex: 1;
-}
-#rival-deck {
-  top: 30%;
-}
-#my-deck {
-  bottom: 30%;
-}
-.deck {
-  position: absolute;
-  right: 20px;
 }
 .hand {
   position: absolute;

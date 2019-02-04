@@ -63,7 +63,7 @@ export default {};
 <style scoped>
 #navbar {
   display: flex;
-  min-width: 1400px;
+  min-width: 800px;
   width: 100%;
   height: 60px;
   background-color: #50bcdf;

@@ -287,6 +287,7 @@ export default {
 </script>
 
 <style scoped>
+
 #board {
   margin-top: 10px;
   border-collapse: collapse;
