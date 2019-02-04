@@ -2,7 +2,7 @@
   <div class="main-content">
       <h2 class="game-title">숫자 야구</h2>
       <div class="game-board">
-      <div class="msg-area"><span class="msg">{{msg}}</span>      <button @click="clearGame(all)" class="clear-button">&times;</button></div>
+      <div class="msg-area"><span class="msg">{{msg}}</span></div>
       <fieldset class="baseball-input">
       <input
         type="text"
@@ -20,6 +20,7 @@
           :key="index"
         >{{index+1}}번째 공 : {{log.number}} Strike: {{log.strike}} Ball: {{log.ball}}</div>
       </div>
+      <button @click="clearGame(all)" class="clear-button">Reset</button>
       </div>
   </div>
 </template>
@@ -139,13 +140,7 @@ button{
   font-size:1.6em;
   font-weight: 700;
 }
-.clear-button{
-  height:100%;
-  font-size:2em;
-  margin-left: 20px;
-  color: rgb(255, 0, 0);
-  cursor: pointer;
-}
+
 .baseball-input{
   margin: 0 auto;
   margin-bottom: 40px;
@@ -175,5 +170,14 @@ button{
   font-size:1.5em;
   color:#333;
 
+}
+.clear-button{
+  width:80px;
+  font-size:1em;
+  font-weight: 700;
+  background-color: rgba(255, 0, 0, .5);
+  border-radius: 25px;
+  color: #333;
+  cursor: pointer;
 }
 </style>

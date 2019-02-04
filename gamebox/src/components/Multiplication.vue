@@ -102,15 +102,7 @@ export default {
 </script>
 
 <style scoped>
-.main-content {
-  margin: 100px auto;
-  padding: 70px 100px;
-  width: 1000px;
-  min-height: 600px;
-  background-color: #fff;
-  box-sizing: border-box;
-  user-select: none;
-}
+
 .game-area{
   text-align: center;
 }
