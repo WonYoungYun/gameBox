@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <h1>Lotto</h1>
-    <button @click="selectNumber">숫자 뽑기</button>
-    <button @click="clearBoard">초기화</button>
+  <div class="main-content">
+    <h2 class="game-title">Lotto</h2>
+    <div class="button-area">
+    <button @click="selectNumber" class="select-button">숫자 뽑기</button>
+    <button @click="clearBoard" class="reset-button">&times;</button>
+    </div>
     <div v-if="isClickButton" class="board">
       <div class="wrap">
         <div class="log">
@@ -86,11 +88,61 @@ export default {
 </script>
 
 <style scoped>
+.button-area{
+  margin-top:30px;
+  text-align: center;
+}
+.button-area button{
+    outline:none;
+  border:none;
+  cursor:pointer;
+}
+.select-button{
+  position: relative;
+  width:180px;
+  height:60px;
+  color:#fff;
+  font-size:24px;
+  font-weight: 700;
+  box-sizing: border-box;
+
+    background: linear-gradient(90deg, #08d0eb, #f441a5, #ffeb3b, #06aa87);
+      border-radius: 40px  0 0 40px;
+  background-size:400%;
+
+}
+.select-button:hover{
+  animation: animate 8s linear infinite;
+
+}
+@keyframes animate {
+  0%{
+    background-position: 0;
+  }
+  100%{
+    background-position: 400%;
+  }
+}
+
+.reset-button{
+    width:60px;
+    height:60px;
+      font-size:1.85em;
+      font-weight: 700;
+      background-color:#333;
+      color:#eee;
+      border-radius: 0 40px 40px 0;
+}
+.reset-button:hover{
+  background-color: #eee;
+  color:#333;
+}
 .board {
   margin: 10px;
 }
 .board .wrap {
   display: flex;
+  justify-content: center;
 }
 
 .ball {

@@ -29,32 +29,36 @@
 
 <script>
 export default {
-  mounted() {
-    this.clickArea();
-  },
   data() {
     return {
       player: "O",
       playerCheck: [],
       nextPlayer: "X",
+      isStartGame: false,
       nextPlaterCheck: [],
       count: 0,
       message: ''
     };
   },
+  mounted(){
+    this.clickArea();
 
+  },
   methods: {
     clickArea() {
-            this.message = "";
+    this.isStartGame = true;
+      this.message = "";
       const area = document.getElementsByTagName("td");
       Array.from(area).forEach((el, idx) => {
         el.addEventListener("click", e => {
           const index = idx + 1;
+
           this.checkArea(e.target, index);
         });
       });
     },
     checkArea(el, idx) {
+      if(!this.isStartGame) return
       if (el.textContent) {
         this.message = `다른 곳에 놓아주세요, 현재는 ${this.player}의 차례입니다.`;
         return;
@@ -77,40 +81,42 @@ export default {
     },
     checkBoard(list, msg) {
       if (list.includes(1) && list.includes(2) && list.includes(3)) {
+        this.isStartGame = false;
         return  this.message = `${msg} 가 이겼습니다!`;
       } else if (list.includes(1) && list.includes(4) && list.includes(7)) {
-        this.clearBoard();
+                this.isStartGame = false;
         return this.message = `${msg} 가 이겼습니다!`;
       } else if (list.includes(1) && list.includes(5) && list.includes(9)) {
-        this.clearBoard();
+                this.isStartGame = false;
         return this.message = `${msg} 가 이겼습니다!`;
       } else if (list.includes(2) && list.includes(5) && list.includes(8)) {
-        this.clearBoard();
+                this.isStartGame = false;
         return this.message = `${msg} 가 이겼습니다!`;
       } else if (list.includes(3) && list.includes(6) && list.includes(9)) {
-        this.clearBoard();
+                this.isStartGame = false;
         return this.message = `${msg} 가 이겼습니다!`;
       } else if (list.includes(3) && list.includes(5) && list.includes(7)) {
-        this.clearBoard();
+                this.isStartGame = false;
         return this.message = `${msg} 가 이겼습니다!`;
       } else if (list.includes(4) && list.includes(5) && list.includes(6)) {
-        this.clearBoard();
+                this.isStartGame = false;
         return this.message = `${msg} 가 이겼습니다!`;
       } else if (list.includes(7) && list.includes(8) && list.includes(9)) {
-        this.clearBoard();
+                this.isStartGame = false;
         return this.message = `${msg} 가 이겼습니다!`;
       }
       if (this.count === 9) {
         this.message = "비겼습니다!"
-        this.clearBoard();
       }
     },
     clearBoard() {
+
       const area = document.getElementsByTagName("td");
       Array.from(area).forEach(el => {
         el.textContent = "";
       });
-
+      this.isStartGame = true;
+      this.message = "";
       this.player = "O";
       this.playerCheck = [];
       this.nextPlaterCheck = [];
