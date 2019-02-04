@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar></nav-bar>
-    <router-view class="main-content"></router-view>
+    <router-view id="main-content"></router-view>
   </div>
 </template>
 
@@ -41,5 +41,13 @@ ul {
 h2 {
   margin: 0;
   padding: 0;
+}
+
+#main-content {
+  margin: 100px auto;
+  padding: 100px 0;
+  width: 1000px;
+  background-color: #fff;
+  text-align: center;
 }
 </style>

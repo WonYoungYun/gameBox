@@ -4,39 +4,42 @@
     <div>
       <div>
         <input type="radio" id="easy" value="easy" v-model="levelCheck">
-        <label for="easy">easy</label>
+        <label for="easy">쉬움</label>
         <input type="radio" id="normal" value="normal" v-model="levelCheck">
-        <label for="normal">normal</label>
+        <label for="normal">중간</label>
         <input type="radio" id="hard" value="hard" v-model="levelCheck">
-        <label for="hard">hard</label>
+        <label for="hard">어려움</label>
         <input type="radio" id="custom" value="custom" v-model="levelCheck">
-        <label for="custom">custom</label>
+        <label for="custom">내가만들기</label>
       </div>
       <div v-if="!isSelectCustom">
+        <label for="custom_height">세로크기&nbsp;</label>
         <input
-          type="text"
+          type="number"
           id="custom_height"
           value="custom_height"
           v-model="level.custom.height"
           maxlength="2"
+          autocomplete="off"
         >
-        <label for="custom_height">height</label>
+        <label for="custom_width">가로크기&nbsp;</label>
         <input
-          type="text"
+          type="number"
           id="custom_width"
           value="custom_width"
           v-model="level.custom.width"
           maxlength="2"
+          autocomplete="off"
         >
-        <label for="custom_width">width</label>
+        <label for="custom_mines">지뢰의 수&nbsp;</label>
         <input
-          type="text"
+          type="number"
           id="custom_mines"
           value="custom_mines"
           v-model="level.custom.mines"
           maxlength="2"
+          autocomplete="off"
         >
-        <label for="custom_mines">mines</label>
       </div>
       <button @click="startGame" :disabled="invalidButton" v-if="!isStart">start</button>
       <button @click="reset" :disabled="invalidButton" v-else>reset</button>
@@ -124,6 +127,14 @@ export default {
         const custom = this.level.custom;
         custom.width = parseInt(custom.width);
         custom.height = parseInt(custom.height);
+        if (custom.width > 30) {
+          this.isStart = false;
+          return alert("가로의 크기를 줄여주세요!");
+        }
+        if (custom.height > 16) {
+          this.isStart = false;
+          return alert("세로의 크기를 줄여주세요!");
+        }
         custom.mines = parseInt(custom.mines);
       }
       return this.setBoard(board, check);

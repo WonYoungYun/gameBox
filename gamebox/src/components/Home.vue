@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <section>
     <h1 class="home-title">여러가지 게임들을 즐기세요!</h1>
 
     <div class="home-description"></div>
@@ -84,7 +84,7 @@
         </li>
       </ul>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -96,14 +96,6 @@ export default {
 </script>
 
 <style scoped>
-#home {
-  margin: 100px auto;
-  padding: 100px 0;
-  width: 1000px;
-  background-color: #fff;
-  text-align: center;
-}
-
 .content {
   width: 100%;
 }
