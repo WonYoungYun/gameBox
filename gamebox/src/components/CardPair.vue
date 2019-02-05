@@ -1,16 +1,25 @@
 <template>
-  <div>
-    <nav>
-      <div>
+  <div class="main-content">
+    <h2 class="game-title">카드 짝맞추기</h2>
+        <span class="my-click-count">Count: {{myClickCount}}</span>
+    <div class="game-setting" >
+      <button class="setting-button"  @click="clickSetting">설정</button>
+      <div class="settings" :class="{active: isClickSetting}" >
+        <div>
         <input type="radio" id="easy" value="easy" v-model="level" :checked="level">
-        <label for="easy">easy</label>
+        <label for="easy">쉬움</label>
+        </div>
+        <div>
         <input type="radio" id="normal" value="normal" v-model="level">
-        <label for="normal">normal</label>
+        <label for="normal">중간</label>
+        </div>
+        <div>
         <input type="radio" id="hard" value="hard" v-model="level">
-        <label for="hard">hard</label>
+        <label for="hard">어려움</label>
+        </div>
+              <button @click="gameStart" :disabled="isSettingBoard" class="start-button">시작</button>
       </div>
-      <button @click="gameStart" :disabled="isSettingBoard">GameStart</button>
-    </nav>
+    </div>
 
     <div id="wrap">
       <div id="play-board">
@@ -27,7 +36,7 @@
         </div>
       </div>
     </div>
-    <h2>내 클릭 횟수: {{myClickCount}}</h2>
+
   </div>
 </template>
 
@@ -63,7 +72,8 @@ export default {
       correct: 0,
       openAllCard: null,
       myClickCount: 0,
-      level: "easy"
+      level: "easy",
+      isClickSetting: false
     };
   },
   created(){
@@ -72,6 +82,7 @@ export default {
 
   methods: {
     gameStart() {
+      this.isClickSetting = false;
       if (this.isStartGame) {
         this.cards = [];
         this.value = [];
@@ -122,7 +133,6 @@ export default {
     },
     flipCard(card) {
       if (this.isSettingBoard) return;
-      //   card.isFlipped ? (card.isFlipped = false) : (card.isFlipped = true);
       if (this.isStartGame) {
         if (card.isFlipped) card.isFlipped = false;
         else return;
@@ -151,6 +161,9 @@ export default {
           alert(`승리! ${this.myClickCount}번 만에 성공했습니다!`);
         }, 500);
       }
+    },
+    clickSetting(){
+      this.isClickSetting ? this.isClickSetting=false : this.isClickSetting=true;
     }
   },
 
@@ -161,10 +174,71 @@ export default {
 </script>
 
 <style scoped>
+.main-content{
+  position: relative;
+}
+button{
+  cursor: pointer;
+}
+input[type=radio]{
+  display: none;
+}
+
+.my-click-count{
+  display: block;
+  margin: 30px 0;
+  font-size:24px;
+}
+
+.game-setting{
+  position:absolute;
+  top:13%;
+  right: 10%;
+  z-index:9999;
+}
+.game-setting input:checked ~ label{
+  color:#fff;
+}
+.setting-button{
+  position: relative;
+  width: 100px;
+  height: 40px;
+  font-size:24px;
+  background-color:#2196f3;
+  color:#fff;
+}
+.settings{
+  background: #ccc;
+  transform-origin: top;
+  transform:perspective(1000px) rotateX(-90deg);
+  transition: .5s;
+}
+.settings.active{
+    transform:perspective(1000px) rotateX(0deg);
+}
+.settings label{
+  display: block;
+  padding:5px;
+  text-align:center;
+  background: #262626;
+  color:#aaa;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(0,0,0, 0.2);
+  transition: all .4s;
+}
+.settings label:hover{
+  background-color:#0d7ad0
+}
+.start-button{
+  width: 100%;
+  font-size:18px;
+  font-weight: 700;
+}
 #wrap {
   position: relative;
-  width: 800px;
+  width: 100%;
   height: 800px;
+  background: linear-gradient(-45deg, #4baf4b, #64cd3c);
   border: 1px solid black;
 }
 #play-board {
@@ -189,13 +263,14 @@ export default {
   text-align: center;
   transition: transform 0.8s;
   transform-style: preserve-3d;
-  border: 1px solid black;
+  border:2px solid black;
+  background-color: #fff;
 }
 .card.flipped .card-inner {
   transform: rotateY(180deg);
 }
 .card-back {
-  background-color: navy;
+  background: url("../assets/cardGame/card.jpg")
 }
 .card-front,
 .card-back {
