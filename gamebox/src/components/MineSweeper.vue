@@ -18,7 +18,7 @@
         </label>
         <label >
         <input type="radio" id="custom" value="custom" v-model="levelCheck">
-        <span>커스텀</span>
+        <span >커스텀</span>
         </label>
         <div v-if="!isSelectCustom" class="custom-setting">
           <input
@@ -54,8 +54,9 @@
       <button @click="startGame" :disabled="invalidButton">&#9873;</button>
       </div>
       </div>
-        <span v-if="gameOver">{{msg}}</span>
-      <div>
+
+      <div class="game-area">
+              <span v-if="gameOver" class="game-message" >{{msg}}</span>
         <table id="board">
           <tbody>
             <tr v-for="(line,index) in board" :key="index">
@@ -91,7 +92,7 @@ export default {
           mines: 40
         },
         hard: {
-          width: 30,
+          width: 24,
           height: 16,
           mines: 80
         },
@@ -142,17 +143,15 @@ export default {
         const custom = this.level.custom;
         custom.width = parseInt(custom.width);
         custom.height = parseInt(custom.height);
-        if (custom.width > 30) {
-          this.isStartGame = false;
+        if (custom.width > 24) {
           return alert("가로의 크기를 줄여주세요!");
         }
         if (custom.height > 16) {
-                    this.isStartGame = false;
           return alert("세로의 크기를 줄여주세요!");
         }
         custom.mines = parseInt(custom.mines);
       }
-      return this.setBoard(board, check);
+      this.setBoard(board, check);
     },
     setBoard(board, check) {
       const height = this.level[check].height;
@@ -210,11 +209,9 @@ export default {
       ];
 
       if (this.gameOver){
-                  this.isStartGame = false;
         return;
       }
       if (target.done) {
-                  this.isStartGame = false;
                   return;
       }
 
@@ -222,7 +219,8 @@ export default {
         target.done = true;
         this.gameOver = true;
         this.msg = "실패 ㅠㅠ";
-        return (target.id = "펑");
+        target.id = "펑"
+        return
       }
 
       if (e.target.textContent !== "") return;
@@ -318,7 +316,7 @@ export default {
 }
 .level-setting{
   position: relative;
-  font-size:20px;
+  font-size:18px;
   font-weight: 700;
   flex: 1
 }
@@ -365,23 +363,43 @@ export default {
     flex:1;
   width: 60px;
   height: 60px;
-  font-size:20px;
+  font-size:24px;
   padding:5px;
   border:1px solid #000;
   background-color:#eee;
   color:#333;
 border-radius: 50%;
   margin-bottom:20px;
-  cursor: pointer;
+      cursor: pointer;
 }
 .button-area button:hover{
   color:#eee;
   background-color: #333;
 }
+.game-area{
+  position: relative;
+}
+.game-message{
+  position: absolute;
+  display: inline-block;
+  top:50%;
+  left:50%;
+  width:400px;
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
+  font-size:24px;
+  font-weight: 700;
+  color:#fff;
+  background-color: rgba(0,0,0,.5);
+  transform: translate(-50%, -50%);
+
+}
+
 #board {
   margin:10px auto;
   border-collapse: collapse;
-  font-weight: 700;
+  font-weight: 600;
 }
 td {
   width: 30px;

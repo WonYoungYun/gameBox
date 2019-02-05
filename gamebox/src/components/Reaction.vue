@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div class="main-content">
+    <h2 class="game-title">반응속도 테스트</h2>
     <div
       id="screen"
       @click="startGame"
-      :class="{waiting:screenStatus.isWating, ready:screenStatus.isReady, now:screenStatus.isNow}"
-    >
+      :class="{waiting:screenStatus.isWaiting, ready:screenStatus.isReady, now:screenStatus.isNow}"
+     >
       <span>{{screenStatus.msg}}</span>
       <p v-if="gameCheck">재시작 하려면 화면을 누르세요</p>
     </div>
-    <p v-if="avgTime">당신의 평균 반응속도: {{avgTime}} 초</p>
+    <p v-if="avgTime" class="avg-reaction-message">당신의 평균 반응속도: {{avgTime}} 초</p>
   </div>
 </template>
 
@@ -92,17 +93,26 @@ export default {
 #screen {
   width: 500px;
   height: 500px;
-  border: 1px solid black;
+  margin: 30px auto;
+font-size: 24px;
+font-weight: 700;
   text-align: center;
   line-height: 5;
 }
 .waiting {
-  background-color: aqua;
+  background-color: rgb(136, 233, 233);
 }
 .ready {
   background-color: red;
 }
 .now {
-  background-color: green;
+  background-color: #008000;
+}
+.avg-reaction-message{
+  background-color:#ddd;
+  color:#333;
+  text-align: center;
+  font-size:20px;
+  font-weight: 700;
 }
 </style>
