@@ -1,49 +1,60 @@
 <template>
-  <div>
-    <h1>MineSweeper</h1>
+  <div class="main-content">
+    <h2 class="game-title">Mine Sweeper</h2>
     <div>
-      <div>
+      <div class="stage-setting-area">
+      <div class="level-setting">
+        <label >
         <input type="radio" id="easy" value="easy" v-model="levelCheck">
-        <label for="easy">쉬움</label>
+        <span>쉬움</span>
+        </label>
+        <label>
         <input type="radio" id="normal" value="normal" v-model="levelCheck">
-        <label for="normal">중간</label>
+        <span>중간</span>
+        </label>
+        <label>
         <input type="radio" id="hard" value="hard" v-model="levelCheck">
-        <label for="hard">어려움</label>
+        <span for="hard">어려움</span>
+        </label>
+        <label >
         <input type="radio" id="custom" value="custom" v-model="levelCheck">
-        <label for="custom">내가만들기</label>
-      </div>
-      <div v-if="!isSelectCustom">
-        <label for="custom_height">세로크기&nbsp;</label>
-        <input
+        <span>커스텀</span>
+        </label>
+        <div v-if="!isSelectCustom" class="custom-setting">
+          <input
           type="number"
           id="custom_height"
           value="custom_height"
           v-model="level.custom.height"
           maxlength="2"
           autocomplete="off"
+          placeholder="세로 크기"
         >
-        <label for="custom_width">가로크기&nbsp;</label>
-        <input
+          <input
           type="number"
           id="custom_width"
           value="custom_width"
           v-model="level.custom.width"
           maxlength="2"
           autocomplete="off"
+          placeholder="가로 크기"
         >
-        <label for="custom_mines">지뢰의 수&nbsp;</label>
-        <input
+          <input
           type="number"
           id="custom_mines"
           value="custom_mines"
           v-model="level.custom.mines"
           maxlength="2"
           autocomplete="off"
+          placeholder="지뢰의 수"
         >
+        </div>
       </div>
-      <button @click="startGame" :disabled="invalidButton" v-if="!isStart">start</button>
-      <button @click="reset" :disabled="invalidButton" v-else>reset</button>
-            <span v-if="gameOver">{{msg}}</span>
+      <div class="button-area">
+      <button @click="startGame" :disabled="invalidButton">&#9873;</button>
+      </div>
+      </div>
+        <span v-if="gameOver">{{msg}}</span>
       <div>
         <table id="board">
           <tbody>
@@ -85,19 +96,19 @@ export default {
           mines: 80
         },
         custom: {
-          width: 3,
-          height: 3,
-          mines: 2
+          width: null,
+          height: null,
+          mines: null
         }
       },
       levelCheck: "",
       board: [],
       minePos: [],
-      isStart: false,
       isCheckCustom: false,
       gameOver: false,
       size: 0,
       msg: "",
+      isStartGame: false,
       open: 0
     };
   },
@@ -123,7 +134,8 @@ export default {
   },
   methods: {
     startGame() {
-      this.isStart = true;
+      if(this.isStartGame) return this.reset();
+      this.isStartGame = true;
       const check = this.levelCheck;
       const board = this.board;
       if (check === "custom") {
@@ -131,11 +143,11 @@ export default {
         custom.width = parseInt(custom.width);
         custom.height = parseInt(custom.height);
         if (custom.width > 30) {
-          this.isStart = false;
+          this.isStartGame = false;
           return alert("가로의 크기를 줄여주세요!");
         }
         if (custom.height > 16) {
-          this.isStart = false;
+                    this.isStartGame = false;
           return alert("세로의 크기를 줄여주세요!");
         }
         custom.mines = parseInt(custom.mines);
@@ -197,8 +209,14 @@ export default {
         { width: fVer, height: fHor + 1 }
       ];
 
-      if (this.gameOver) return;
-      if (target.done) return;
+      if (this.gameOver){
+                  this.isStartGame = false;
+        return;
+      }
+      if (target.done) {
+                  this.isStartGame = false;
+                  return;
+      }
 
       if (target.mine === "X") {
         target.done = true;
@@ -281,6 +299,7 @@ export default {
     reset() {
       this.board = [];
       this.minePos = [];
+      this.isStartGame = false;
       this.gameOver = false;
       this.open = 0;
       this.startGame();
@@ -290,30 +309,99 @@ export default {
 </script>
 
 <style scoped>
-
+.stage-setting-area{
+  display:flex;
+  margin-top:30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.level-setting{
+  position: relative;
+  font-size:20px;
+  font-weight: 700;
+  flex: 1
+}
+.level-setting label{
+  position: relative;
+  cursor: pointer;
+}
+.level-setting label input[type=radio]{
+  display: none;
+}
+.level-setting label span{
+  position: relative;
+  display:inline-block;
+  margin: 20px 10px;
+  padding:5px;
+  width: 80px;
+  background-color: #000;
+  border:1px solid #444;
+  color:#444;
+  box-sizing: border-box;
+  text-align: center;
+  border-radius: 10px;
+}
+.level-setting label input:checked ~ span{
+  color:#fff;
+  border: 2px solid #ff0000;
+}
+.custom-setting{
+  position: absolute;
+  display: flex;
+  left:90%;
+  top:80%;
+  height: 80px;
+  flex-direction: column;
+  background-color:#333;
+}
+.custom-setting input[type=number]{
+  margin-top:5px;
+  width: 80px;
+  outline:none;
+  text-align: center;
+}
+.button-area button{
+    flex:1;
+  width: 60px;
+  height: 60px;
+  font-size:20px;
+  padding:5px;
+  border:1px solid #000;
+  background-color:#eee;
+  color:#333;
+border-radius: 50%;
+  margin-bottom:20px;
+  cursor: pointer;
+}
+.button-area button:hover{
+  color:#eee;
+  background-color: #333;
+}
 #board {
-  margin-top: 10px;
+  margin:10px auto;
   border-collapse: collapse;
+  font-weight: 700;
 }
 td {
   width: 30px;
   height: 30px;
-  border: 1px solid black;
+
   text-align: center;
 }
 
 tbody td {
-  background-color: #ccc;
-  color: #ccc;
+  background: linear-gradient(45deg, #ccc, #999);
+    border:1px solid #333;
 }
 .question {
-  background-color: red;
+  color: red;
 }
 .exclamation {
-  background-color: blue;
+  color: blue;
 }
 .opened {
-  background-color: #fff;
+  background: #fff;
   color: #000;
 }
 </style>
