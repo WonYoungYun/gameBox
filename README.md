@@ -1,6 +1,6 @@
 # gamebox
 
-(여기)[https://wonyoungyun.github.io/gameBox/]를 통해 결과물을 확인할 수 있습니다.
+[여기](https://wonyoungyun.github.io/gameBox/) 를 통해 결과물을 확인할 수 있습니다.
 
 ## 프로젝트 기본준비
 
@@ -29,7 +29,7 @@ npm run build
 ### 프로젝트에 대한 소개
 
 vue-cli 3.0을 통해 만들었습니다.
-컴포넌트들을 나누기 위해 vue-router를 사용하였습니다.
+vue-router를 사용하여 게임 컴포넌트들을 분리
 
 GameBox는 11개의 게임으로 구성되어 있습니다.
 
