@@ -3,60 +3,60 @@
     <h2 class="game-title">Mine Sweeper</h2>
     <div>
       <div class="stage-setting-area">
-      <div class="level-setting">
-        <label >
-        <input type="radio" id="easy" value="easy" v-model="levelCheck">
-        <span>쉬움</span>
-        </label>
-        <label>
-        <input type="radio" id="normal" value="normal" v-model="levelCheck">
-        <span>중간</span>
-        </label>
-        <label>
-        <input type="radio" id="hard" value="hard" v-model="levelCheck">
-        <span for="hard">어려움</span>
-        </label>
-        <label >
-        <input type="radio" id="custom" value="custom" v-model="levelCheck">
-        <span >커스텀</span>
-        </label>
-        <div v-if="!isSelectCustom" class="custom-setting">
-          <input
-          type="number"
-          id="custom_height"
-          value="custom_height"
-          v-model="level.custom.height"
-          maxlength="2"
-          autocomplete="off"
-          placeholder="세로 크기"
-        >
-          <input
-          type="number"
-          id="custom_width"
-          value="custom_width"
-          v-model="level.custom.width"
-          maxlength="2"
-          autocomplete="off"
-          placeholder="가로 크기"
-        >
-          <input
-          type="number"
-          id="custom_mines"
-          value="custom_mines"
-          v-model="level.custom.mines"
-          maxlength="2"
-          autocomplete="off"
-          placeholder="지뢰의 수"
-        >
+        <div class="level-setting">
+          <label>
+            <input type="radio" id="easy" value="easy" v-model="levelCheck">
+            <span>쉬움</span>
+          </label>
+          <label>
+            <input type="radio" id="normal" value="normal" v-model="levelCheck">
+            <span>중간</span>
+          </label>
+          <label>
+            <input type="radio" id="hard" value="hard" v-model="levelCheck">
+            <span for="hard">어려움</span>
+          </label>
+          <label>
+            <input type="radio" id="custom" value="custom" v-model="levelCheck">
+            <span>커스텀</span>
+          </label>
+          <div v-if="!isSelectCustom" class="custom-setting">
+            <input
+              type="number"
+              id="custom_height"
+              value="custom_height"
+              v-model="level.custom.height"
+              maxlength="2"
+              autocomplete="off"
+              placeholder="세로 크기"
+            >
+            <input
+              type="number"
+              id="custom_width"
+              value="custom_width"
+              v-model="level.custom.width"
+              maxlength="2"
+              autocomplete="off"
+              placeholder="가로 크기"
+            >
+            <input
+              type="number"
+              id="custom_mines"
+              value="custom_mines"
+              v-model="level.custom.mines"
+              maxlength="2"
+              autocomplete="off"
+              placeholder="지뢰의 수"
+            >
+          </div>
         </div>
-      </div>
-      <div class="button-area">
-      <button @click="startGame" :disabled="invalidButton">&#9873;</button>
-      </div>
+        <div class="button-area">
+          <button @click="startGame" :disabled="invalidButton">&#9873;</button>
+        </div>
       </div>
 
       <div class="game-area">
-              <span v-if="gameOver" class="game-message" >{{msg}}</span>
+        <span v-if="gameOver" class="game-message">{{msg}}</span>
         <table id="board">
           <tbody>
             <tr v-for="(line,index) in board" :key="index">
@@ -71,7 +71,6 @@
           </tbody>
         </table>
       </div>
-
     </div>
   </div>
 </template>
@@ -130,12 +129,12 @@ export default {
       return false;
     }
   },
-  created(){
-        document.title = "MineSweeper";
+  created() {
+    document.title = "MineSweeper";
   },
   methods: {
     startGame() {
-      if(this.isStartGame) return this.reset();
+      if (this.isStartGame) return this.reset();
       this.isStartGame = true;
       const check = this.levelCheck;
       const board = this.board;
@@ -208,19 +207,19 @@ export default {
         { width: fVer, height: fHor + 1 }
       ];
 
-      if (this.gameOver){
+      if (this.gameOver) {
         return;
       }
       if (target.done) {
-                  return;
+        return;
       }
 
       if (target.mine === "X") {
         target.done = true;
         this.gameOver = true;
         this.msg = "실패 ㅠㅠ";
-        target.id = "펑"
-        return
+        target.id = "펑";
+        return;
       }
 
       if (e.target.textContent !== "") return;
@@ -307,97 +306,96 @@ export default {
 </script>
 
 <style scoped>
-.stage-setting-area{
-  display:flex;
-  margin-top:30px;
+.stage-setting-area {
+  display: flex;
+  margin-top: 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.level-setting{
+.level-setting {
   position: relative;
-  font-size:18px;
+  font-size: 18px;
   font-weight: 700;
-  flex: 1
+  flex: 1;
 }
-.level-setting label{
+.level-setting label {
   position: relative;
   cursor: pointer;
 }
-.level-setting label input[type=radio]{
+.level-setting label input[type="radio"] {
   display: none;
 }
-.level-setting label span{
+.level-setting label span {
   position: relative;
-  display:inline-block;
+  display: inline-block;
   margin: 20px 10px;
-  padding:5px;
+  padding: 5px;
   width: 80px;
   background-color: #000;
-  border:1px solid #444;
-  color:#444;
+  border: 2px solid #444;
+  color: #888;
   box-sizing: border-box;
   text-align: center;
   border-radius: 10px;
 }
-.level-setting label input:checked ~ span{
-  color:#fff;
+.level-setting label input:checked ~ span {
+  color: #fff;
   border: 2px solid #ff0000;
 }
-.custom-setting{
+.custom-setting {
   position: absolute;
   display: flex;
-  left:90%;
-  top:80%;
+  left: 90%;
+  top: 80%;
   height: 80px;
   flex-direction: column;
-  background-color:#333;
-}
-.custom-setting input[type=number]{
-  margin-top:5px;
-  width: 80px;
-  outline:none;
-  text-align: center;
-}
-.button-area button{
-    flex:1;
-  width: 60px;
-  height: 60px;
-  font-size:24px;
-  padding:5px;
-  border:1px solid #000;
-  background-color:#eee;
-  color:#333;
-border-radius: 50%;
-  margin-bottom:20px;
-      cursor: pointer;
-}
-.button-area button:hover{
-  color:#eee;
   background-color: #333;
 }
-.game-area{
+.custom-setting input[type="number"] {
+  margin-top: 5px;
+  width: 80px;
+  outline: none;
+  text-align: center;
+}
+.button-area button {
+  flex: 1;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  padding: 5px;
+  border: 1px solid #000;
+  background-color: #eee;
+  color: #333;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.button-area button:hover {
+  color: #eee;
+  background-color: #333;
+}
+.game-area {
   position: relative;
 }
-.game-message{
+.game-message {
   position: absolute;
   display: inline-block;
-  top:50%;
-  left:50%;
-  width:400px;
+  top: 50%;
+  left: 50%;
+  width: 400px;
   text-align: center;
   height: 100px;
   line-height: 100px;
-  font-size:24px;
+  font-size: 24px;
   font-weight: 700;
-  color:#fff;
-  background-color: rgba(0,0,0,.5);
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
   transform: translate(-50%, -50%);
-
 }
 
 #board {
-  margin:10px auto;
+  margin: 10px auto;
   border-collapse: collapse;
   font-weight: 600;
 }
@@ -410,7 +408,7 @@ td {
 
 tbody td {
   background: linear-gradient(45deg, #ccc, #999);
-    border:1px solid #333;
+  border: 1px solid #333;
 }
 .question {
   color: red;

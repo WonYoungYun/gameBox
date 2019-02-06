@@ -1,8 +1,6 @@
 <template>
-  <div id="jeathStone">
-    <h1>
-      <a href="/jearthstone">JeathStone</a>
-    </h1>
+  <div id="jearthstone">
+    <h2 class="game-title">JeathStone</h2>
     <div id="wrap">
       <div id="rival" class="area">
         <div id="rival-hand" class="hand">
@@ -24,7 +22,8 @@
             :class="{hero:true, turn:!myTurn}"
             @click="directAttack(rivalStatus.id)"
           >
-            {{rivalStatus.id}}
+            <span class="hero-id">{{rivalStatus.id}}</span>
+
             <div
               id="rival-hero-attack"
               class="status attack"
@@ -73,7 +72,7 @@
         </div>
         <div class="hero-area">
           <div id="my-hero" :class="{hero:true, turn:myTurn}" @click="directAttack(myStatus.id)">
-            {{myStatus.id}}
+            <span class="hero-id">{{myStatus.id}}</span>
             <div id="my-hero-attack" class="status attack" v-if="myStatus.att>0">{{myStatus.att}}</div>
             <div id="my-hero-health" class="status health">{{myStatus.hp}}</div>
           </div>
@@ -156,7 +155,7 @@ export default {
     }
   },
   created() {
-        document.title = "JearthStone";
+    document.title = "JearthStone";
     this.setGame();
   },
   methods: {
@@ -312,22 +311,28 @@ export default {
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-  color: #333;
+#jearthstone {
+  margin: 100px auto;
+  padding: 70px 50px;
+  width: 1200px;
+  min-height: 600px;
+  background-color: #fff;
+  box-sizing: border-box;
+  user-select: none;
 }
 #wrap {
   position: relative;
+  display: flex;
   margin: 100px auto;
   width: 100%;
-  min-width:940px;
+  min-width: 940px;
   max-width: 1200px;
   height: 900px;
   border: 1px solid black;
-  display: flex;
+  background: linear-gradient(45deg, #e8e2c4, #ece6cc);
   flex-direction: column;
   text-align: center;
-  box-sizing:border-box;
+  box-sizing: border-box;
 
   user-select: none;
   z-index: 0;
@@ -394,8 +399,22 @@ a {
   height: 100px;
   cursor: pointer;
 }
+.hero-id {
+  position: absolute;
+  top: -10%;
+  left: -70%;
+  font-size: 24px;
+  font-weight: 700;
+}
+#my-hero {
+  background: url("../assets/jearthstone/me.jpg") 0 0;
+}
+#rival-hero {
+  background: url("../assets/jearthstone/rival.png") 0 0;
+}
 .turn {
-  background-color: yellow;
+  border: 3px solid lightgreen;
+  box-shadow: 0 0 1em 1em lightgreen;
 }
 #my-hero {
   margin-bottom: 150px;
@@ -406,12 +425,14 @@ a {
 .hero-cost {
   position: absolute;
   right: 10%;
+  font-size: 24px;
+  font-weight: 700;
 }
 #my-cost {
-  bottom: 10%;
+  bottom: 80%;
 }
 #rival-cost {
-  top: 10%;
+  top: 80%;
 }
 .field {
   flex: 1;
@@ -451,11 +472,14 @@ a {
   height: 130px;
   border: 1px solid black;
   background-color: brown;
-  line-height: 6;
+  line-height: 4;
   transition: all 0.3s;
   cursor: pointer;
 }
-
+.minion-name {
+  font-size: 24px;
+  font-weight: 700;
+}
 .selected {
   background-color: burlywood;
   transform: scale(1.2);
