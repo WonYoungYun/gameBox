@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <h1>2048Game</h1>
-    <div>
+  <div class="main-content">
+    <h2 class="game-title">2048Game</h2>
+    <div class="board">
       <table id="table" @mousedown="mouseDown" @mousemove="mouseMove" @mouseup="mouseUp">
         <tr v-for="(line,index) in table" :key="index">
-          <td v-for="item in line" :key="item.id">{{item.content}}</td>
+          <td v-for="item in line" :key="item.id" :class="{block: item.content}">{{item.content}}</td>
         </tr>
       </table>
     </div>
@@ -34,15 +34,15 @@ export default {
     };
   },
   created() {
-        document.title = "2048Game";
-    window.addEventListener("keyup", e=>{
+    document.title = "2048Game";
+    window.addEventListener("keyup", e => {
       this.keyCode = e.keyCode;
-    })
-    window.addEventListener("keyup", this.checkPressKey)
+    });
+    window.addEventListener("keyup", this.checkPressKey);
     this.setTable();
   },
   beforeDestroy() {
-    window.removeEventListener("keyup", this.checkPressKey)
+    window.removeEventListener("keyup", this.checkPressKey);
   },
   methods: {
     setTable() {
@@ -100,20 +100,21 @@ export default {
       this.mousePos.direction = "";
       this.gameCheck();
     },
-    checkPressKey(){
+    checkPressKey() {
       if (!this.isStartGame) return;
-            //37 :left 39:right 38:up 40:down
-      if(this.keyCode === 37){
-        this.mousePos.direction = 'left'
-      } else if(this.keyCode === 39) this.mousePos.direction = 'right'
-      else if(this.keyCode === 38) this.mousePos.direction = 'up'
-      else if(this.keyCode === 40) this.mousePos.direction = 'down'
+      //37 :left 39:right 38:up 40:down
+      if (this.keyCode === 37) {
+        this.mousePos.direction = "left";
+      } else if (this.keyCode === 39) this.mousePos.direction = "right";
+      else if (this.keyCode === 38) this.mousePos.direction = "up";
+      else if (this.keyCode === 40) this.mousePos.direction = "down";
+      if (!this.mousePos.direction) return;
       this.pressKey();
       this.randomCreate();
       this.mousePos.direction = "";
       this.gameCheck();
     },
-    pressKey(){
+    pressKey() {
       switch (this.mousePos.direction) {
         case "right": {
           this.table.forEach((el, index) => {
@@ -236,7 +237,8 @@ export default {
           this.sideTable = [[], [], [], []];
           break;
         }
-      }},
+      }
+    },
     gameCheck() {
       if (!this.isStartGame) {
         this.isStartGame = false;
@@ -273,6 +275,9 @@ export default {
 </script>
 
 <style scoped>
+.board {
+  margin-top: 50px;
+}
 #table {
   margin: 0 auto;
   width: 500px;
@@ -284,8 +289,13 @@ export default {
 td {
   width: 40px;
   height: 40px;
-  border: 1px solid black;
+  border: 3px solid black;
   text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+td.block {
+  background-color: #fadfc4;
 }
 </style>
 
