@@ -1,13 +1,29 @@
-# gameBox
+# gamebox
 
-
-Vue-cli 3.0을 이용하여 제작하였습니다.
-
-각각의 게임이 개별이기 때문에 vuex는 사용하지 않고 vue-router를 통해 컴포넌트를 나누었습니다.
-
+## Project setup
+```
 npm install
+```
 
+### Compiles and hot-reloads for development
+```
 npm run serve
+```
 
+### Compiles and minifies for production
+```
 npm run build
+```
 
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
